@@ -207,7 +207,7 @@ Public Class clsCallReport
         loDtaRow.Item("sField03") = p_oDTSrce(lnRow).Item("sApprovCd")
         loDtaRow.Item("sField04") = p_oDTSrce(lnRow).Item("sSourceCd")
         loDtaRow.Item("sField05") = IIf(p_oDTSrce(lnRow).Item("cTLMStatx") = "UR", "CR", p_oDTSrce(lnRow).Item("cTLMStatx"))
-        loDtaRow.Item("sField06") = Left(p_oDTSrce(lnRow).Item("sRemarksx"), 72)
+        loDtaRow.Item("sField06") = (p_oDTSrce(lnRow).Item("sRemarksx"))
         loDtaRow.Item("sField07") = getAgent(p_oDTSrce(lnRow).Item("sAgentIDx"))
         loDtaRow.Item("sField08") = Format(p_oDTSrce(lnRow).Item("dModified"), "MM-dd-yyyy  hh:mm")
         Return loDtaRow
