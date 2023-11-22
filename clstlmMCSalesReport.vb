@@ -3,26 +3,23 @@ Imports ADODB
 Imports ggcAppDriver
 Imports CrystalDecisions.CrystalReports.Engine
 
-Public Class clsCallReport
+Public Class clstlmMCSalesReport
     Private p_oDriver As ggcAppDriver.GRider
     Private p_oSTRept As DataSet
     Private p_oDTSrce As DataTable
 
-    Private p_nReptType As Integer      '0=Summary;1=Detail
-    Private p_abInclude(1) As Integer   '0=Default;1=Financing
+    Private p_nReptType As Integer
     Private p_dDateFrom As Date
     Private p_dDateThru As Date
+    Private p_sAgentID As String
     Private p_sBranchCD As String
 
+
     Public Function getParameter() As Boolean
-        Dim loFrm As frmOutboundCall
 
-        loFrm = New frmOutboundCall
-
-        'Disable Report Type Group
-        loFrm.gbxPanel01.Enabled = False
-        'Set Detail as Report Type
-        loFrm.rbtTypex02.Checked = True
+        Dim loFrm As frmMCSalesCriteria
+        loFrm = New frmMCSalesCriteria
+        loFrm.GRider = p_oDriver
 
         loFrm.ShowDialog()
 
@@ -30,12 +27,10 @@ Public Class clsCallReport
             'Since we have not allowed the report type to be edited
             p_nReptType = 0
 
-            p_abInclude(0) = loFrm.chkInclude01.Checked
-            p_abInclude(1) = loFrm.chkInclude02.Checked
-
             p_dDateFrom = loFrm.txtField01.Text
             p_dDateThru = loFrm.txtField02.Text
-
+            p_sAgentID = loFrm.txtField03.Tag
+            p_sBranchCD = loFrm.txtField04.Tag
             loFrm = Nothing
             Return True
         Else
@@ -49,7 +44,7 @@ Public Class clsCallReport
 
         Dim lsSQL As String 'whole statement
         Dim lsQuery1 As String
-        Dim lsQuery2 As String
+
 
         'Show progress bar
         oProg = New frmProgress
@@ -58,75 +53,51 @@ Public Class clsCallReport
         oProg.ShowProcess("Please wait...")
         oProg.Show()
 
-        lsQuery1 = "SELECT CONCAT(b.sLastName, ', ', b.sFrstName, IF(IFNULL(b.sSuffixNm, '') = '', '', CONCAT(' ', b.sSuffixNm)), IF(IFNULL(b.sMiddName, '') = '', '', CONCAT(' ', b.sMiddName))) `sClientNm`" &
-                        ", a.sMobileNo `sMobileNo`" &
-                        ", a.sRemarksx `sRemarksx`" &
-                        ", a.sApprovCd `sApprovCd`" &
-                        ", CASE a.cTranStat" &
-                            " WHEN '2' THEN a.cTLMStatx" &
-                            " ELSE CONCAT(a.cTLMStatx, '(RECYCLED)')" &
-                            " END `cTLMStatx`" &
-                        ", a.sSourceCD `sSourceCD`" &
-                        ", a.sModified `sModified`" &
-                        ", a.dModified `dModified`" &
-                        ", a.sAgentIDx `sAgentIDx`" &
-                " FROM Call_Outgoing a" &
-                    " LEFT JOIN Client_Master b" &
-                        " ON a.sClientID = b.sClientID" &
-                " WHERE a.sSourceCd <> 'LEND'" &
-                    " AND a.cTranStat IN ('2')" &
-                    " AND a.dModified BETWEEN " & strParm(Format(p_dDateFrom, "yyyy-MM-dd") & " 00:00:00") &
-                        " AND " & strParm(Format(p_dDateThru, "yyyy-MM-dd") & " 23:59:00")
-
-        lsQuery2 = "SELECT CONCAT(b.sLastName, ', ', b.sFrstName, IF(IFNULL(b.sSuffixNm, '') = '', '', CONCAT(' ', b.sSuffixNm)), IF(IFNULL(b.sMiddName, '') = '', '', CONCAT(' ', b.sMiddName))) `sClientNm`" &
-                        ", a.sMobileNo `sMobileNo`" &
-                        ", a.sRemarksx `sRemarksx`" &
-                        ", a.sApprovCd `sApprovCd`" &
-                        ", CASE a.cTranStat" &
-                            " WHEN '2' THEN a.cTLMStatx" &
-                            " ELSE CONCAT(a.cTLMStatx, '(RECYCLED)')" &
-                            " END `cTLMStatx`" &
-                        ", a.sSourceCD `sSourceCD`" &
-                        ", a.sModified `sModified`" &
-                        ", a.dModified `dModified`" &
-                        ", a.sAgentIDx `sAgentIDx`" &
-               " FROM Call_Outgoing a" &
-                   " LEFT JOIN Client_Master b" &
-                       " ON a.sClientID = b.sClientID" &
-               " WHERE a.sSourceCd = 'LEND'" &
-                   " AND a.cTranStat IN ('2')" &
-                   " AND a.dModified BETWEEN " & strParm(Format(p_dDateFrom, "yyyy-MM-dd") & " 00:00:00") &
+        lsQuery1 = " SELECT  " &
+                    "   CONCAT(d.sLastName, ', ', d.sFrstName, IF(IFNULL(d.sSuffixNm, '') = '', '', CONCAT(' ', d.sSuffixNm)), IF(IFNULL(d.sMiddName, '') = '', '', CONCAT(' ', d.sMiddName))) sClientNm " &
+                    " , a.sMobileNo sMobileNo " &
+                    " , b.sAgentIDx sAgentIDx " &
+                    " , c.sDRNoxxxx sDRNoxxxx " &
+                    " , h.sBrandNme sBrandNme " &
+                    " , g.sModelNme sModelNme " &
+                    " , i.sBranchNm sBranchNm " &
+                    " FROM TLM_Sales a " &
+                    " LEFT JOIN Call_Outgoing b " &
+                    " ON a.sSourceNo = b.sTransNox " &
+                    " LEFT JOIN MC_SO_Master c " &
+                    " ON a.sReferNox = c.sTransNox " &
+                    " LEFT JOIN Client_Master d " &
+                    " ON c.sClientID = d.sClientID " &
+                    " LEFT JOIN MC_SO_Detail e " &
+                    " ON c.sTransNox = e.sTransNox  " &
+                    " LEFT JOIN MC_Serial f " &
+                    " ON e.sSerialID = f.sSerialID " &
+                    " LEFT JOIN MC_Model g " &
+                    " ON  f.sModelIDx =  g.sModelIDx " &
+                    " LEFT JOIN Brand h " &
+                    " ON g.sBrandIDx = h.sBrandIDx " &
+                    " LEFT JOIN Branch i " &
+                    " ON  f.sBranchCd = i.sBranchCd " &
+                " WHERE a.dModified BETWEEN " & strParm(Format(p_dDateFrom, "yyyy-MM-dd") & " 00:00:00") &
                         " AND " & strParm(Format(p_dDateThru, "yyyy-MM-dd") & " 23:59:00")
 
 
-        Dim lsAgent As String = p_oDriver.UserID
-        If lsAgent = "M0T1160004" Or
-            lsAgent = "M001160022" Or
-            lsAgent = "M001160024" Or
-            lsAgent = "M001111122" Or
-            lsAgent = "M001180036" Or
-            lsAgent = "M0T1230002" Then
-            lsAgent = ""
+
+        If p_sAgentID <> "" Then
+            lsQuery1 = AddCondition(lsQuery1, "b.sAgentIDx = " & strParm(p_sAgentID))
         End If
-
-        If lsAgent <> "" Then
-            lsQuery1 = AddCondition(lsQuery1, "a.sAgentIDx = " & strParm(lsAgent))
-            lsQuery2 = AddCondition(lsQuery2, "a.sAgentIDx = " & strParm(lsAgent))
+        If p_sBranchCD <> "" Then
+            lsQuery1 = AddCondition(lsQuery1, "i.sBranchCd = " & strParm(p_sBranchCD))
         End If
 
         lsSQL = ""
-        If p_abInclude(0) Then
-            lsSQL = lsQuery1
-        End If
 
-        If p_abInclude(1) And lsSQL <> "" Then
-            lsSQL = lsSQL & " UNION " & lsQuery2
-        ElseIf p_abInclude(1) Then
-            lsSQL = lsQuery2
-        End If
+        lsSQL = lsQuery1
+
+       
 
         If lsSQL <> "" Then
-            lsSQL = lsSQL & " ORDER BY sAgentIDx, dModified ASC"
+            lsSQL = lsSQL & " ORDER BY sAgentIDx, a.dModified ASC"
         End If
         Debug.Print(lsSQL)
 
@@ -151,7 +122,7 @@ Public Class clsCallReport
         clsRpt = New clsReports
         clsRpt.GRider = p_oDriver
         'Set the Report Source Here
-        If Not clsRpt.initReport("TLMC1") Then
+        If Not clsRpt.initReport("TLMC3") Then
             Return False
         End If
 
@@ -167,7 +138,7 @@ Public Class clsCallReport
 
         'Set First Header
         loTxtObj = loRpt.ReportDefinition.Sections(1).ReportObjects("txtHeading1")
-        loTxtObj.Text = "Outbound Call Report"
+        loTxtObj.Text = "MC Sales Report"
 
         'Set Second Header
         loTxtObj = loRpt.ReportDefinition.Sections(1).ReportObjects("txtHeading2")
@@ -204,12 +175,11 @@ Public Class clsCallReport
         loDtaRow.Item("nField01") = lnRow + 1
         loDtaRow.Item("sField01") = p_oDTSrce(lnRow).Item("sClientNm")
         loDtaRow.Item("sField02") = p_oDTSrce(lnRow).Item("sMobileNo")
-        loDtaRow.Item("sField03") = p_oDTSrce(lnRow).Item("sApprovCd")
-        loDtaRow.Item("sField04") = p_oDTSrce(lnRow).Item("sSourceCd")
-        loDtaRow.Item("sField05") = IIf(p_oDTSrce(lnRow).Item("cTLMStatx") = "UR", "CR", p_oDTSrce(lnRow).Item("cTLMStatx"))
-        loDtaRow.Item("sField06") = (p_oDTSrce(lnRow).Item("sRemarksx"))
-        loDtaRow.Item("sField07") = getAgent(p_oDTSrce(lnRow).Item("sAgentIDx"))
-        loDtaRow.Item("sField08") = Format(p_oDTSrce(lnRow).Item("dModified"), "MM-dd-yyyy  hh:mm")
+        loDtaRow.Item("sField03") = getAgent(p_oDTSrce(lnRow).Item("sAgentIDx"))
+        loDtaRow.Item("sField04") = p_oDTSrce(lnRow).Item("sDRNoxxxx")
+        loDtaRow.Item("sField05") = p_oDTSrce(lnRow).Item("sBrandNme")
+        loDtaRow.Item("sField06") = p_oDTSrce(lnRow).Item("sModelNme")
+        loDtaRow.Item("sField07") = p_oDTSrce(lnRow).Item("sBranchNm")
         Return loDtaRow
     End Function
 
@@ -231,4 +201,6 @@ Public Class clsCallReport
         p_oSTRept = Nothing
         p_oDTSrce = Nothing
     End Sub
+
+
 End Class

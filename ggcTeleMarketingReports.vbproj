@@ -67,6 +67,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\SAP BusinessObjects\Crystal Reports for .NET Framework 4.0\Common\SAP BusinessObjects Enterprise XI 4.0\win32_x86\dotnet\FlashControlV71.dll</HintPath>
     </Reference>
+    <Reference Include="ggcAppDriver, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\GGC_Systems\vb.net\ggcAppDriver.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\GGC_Systems\vb.net\TeleMarketing\MySql.Data.dll</HintPath>
@@ -99,6 +103,20 @@
   <ItemGroup>
     <Compile Include="clsCallReport.vb" />
     <Compile Include="clsReports.vb" />
+    <Compile Include="clsCallStatusReport.vb" />
+    <Compile Include="clstlmMCSalesReport.vb" />
+    <Compile Include="frmMCSalesCriteria.designer.vb">
+      <DependentUpon>frmMCSalesCriteria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMCSalesCriteria.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmCallStatusCriteria.designer.vb">
+      <DependentUpon>frmCallStatusCriteria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmCallStatusCriteria.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmOutboundCall.designer.vb">
       <DependentUpon>frmOutboundCall.vb</DependentUpon>
     </Compile>
@@ -133,6 +151,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmMCSalesCriteria.resx">
+      <DependentUpon>frmMCSalesCriteria.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmCallStatusCriteria.resx">
+      <DependentUpon>frmCallStatusCriteria.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmOutboundCall.resx">
       <DependentUpon>frmOutboundCall.vb</DependentUpon>
     </EmbeddedResource>
@@ -167,12 +191,6 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ggcAppDriver\ggcAppDriver.vbproj">
-      <Project>{6FA248F3-A2BA-43DF-BE98-032E11714DB5}</Project>
-      <Name>ggcAppDriver</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
