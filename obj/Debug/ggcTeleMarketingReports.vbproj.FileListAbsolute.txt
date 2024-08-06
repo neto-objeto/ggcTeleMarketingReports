@@ -56,3 +56,19 @@ Z:\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTe
 Z:\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.dll
 Z:\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.xml
 Z:\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.pdb
+C:\GGC_Systems\vb.net\ggcTeleMarketingReports.dll
+C:\GGC_Systems\vb.net\ggcTeleMarketingReports.pdb
+C:\GGC_Systems\vb.net\ggcTeleMarketingReports.xml
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.AssemblyReference.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.ResolveComReference.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmMCSalesCriteria.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmCallStatusCriteria.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmOutboundCall.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmReportViewer.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.Resources.resources
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.GenerateResource.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.CoreCompileInputs.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.CopyComplete
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.dll
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.xml
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.pdb
