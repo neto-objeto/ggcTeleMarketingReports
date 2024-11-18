@@ -61,6 +61,7 @@ C:\GGC_Systems\vb.net\ggcTeleMarketingReports.pdb
 C:\GGC_Systems\vb.net\ggcTeleMarketingReports.xml
 D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.AssemblyReference.cache
 D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.vbproj.ResolveComReference.cache
+D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmBranchCriteria.resources
 D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmMCSalesCriteria.resources
 D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmCallStatusCriteria.resources
 D:\Guanzon\GMC SEG Folder\vb.net\My Applications\ggcTeleMarketingReports\obj\Debug\ggcTeleMarketingReports.frmOutboundCall.resources
