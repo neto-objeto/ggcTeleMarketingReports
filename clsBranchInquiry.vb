@@ -67,6 +67,7 @@ Public Class clsBranchInquiry
                         " WHEN 'ER' THEN 'Employee Referral' " &
                         " WHEN 'MD' THEN 'Management Discount' " &
                         " WHEN 'SR' THEN 'Suzuki Referral' " &
+                        " WHEN 'BC' THEN 'Barangay Sales Caravan'" &
                         " END `Inquiry Type` " &
                     " , a.dTransact `Date of Inquiry` " &
                     " , b.sCompnyNm `Customer Name` " &
